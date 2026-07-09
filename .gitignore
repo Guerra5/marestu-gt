@@ -1,0 +1,6 @@
+# Excluir archivos sensibles y carpetas de sistema
+.env
+/vendor/
+/phpmyadmin/
+*.log
+.DS_Store
