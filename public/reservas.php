@@ -43,32 +43,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $cliente_id = (int)($_POST['cliente_id'] ?? 0);
   $fecha_salida = (string)($_POST['fecha_salida'] ?? '');
-  $fecha_retorno = (string)($_POST['fecha_retorno'] ?? '');
+$fecha_evento = (string)($_POST['fecha_evento'] ?? '');
+$fecha_retorno = (string)($_POST['fecha_retorno'] ?? '');
   $nota = trim((string)($_POST['nota'] ?? ''));
 
   // VALIDACIONES DE NEGOCIO
   if ($cliente_id <= 0) {
     $error = "Seleccioná un cliente.";
-  } elseif ($fecha_salida === '' || $fecha_retorno === '') {
-    $error = "Fechas obligatorias.";
+  } elseif ($fecha_salida === '' || $fecha_evento === '' || $fecha_retorno === '') {
+  $error = "Las fechas de salida, evento y retorno son obligatorias.";
   } 
   // Bloqueo de fechas pasadas
   elseif ($fecha_salida < $hoy) {
     $error = "No puedes crear reservas con fecha de salida anterior a hoy ($hoy).";
   }
+
+  elseif (strtotime($fecha_evento) < strtotime($fecha_salida)) {
+  $error = "La fecha del evento no puede ser menor a la fecha de salida.";
+}
+elseif (strtotime($fecha_retorno) < strtotime($fecha_evento)) {
+  $error = "La fecha de retorno no puede ser menor a la fecha del evento.";
+}
+
   // Validación de orden cronológico
-  elseif (strtotime($fecha_retorno) < strtotime($fecha_salida)) {
-    $error = "La fecha retorno no puede ser menor a la fecha salida.";
-  } else {
+  else {
     $codigo = next_res_code($pdo);
 
     $ins = $pdo->prepare("INSERT INTO reservas
-      (codigo, cliente_id, fecha_salida, fecha_retorno, estado, nota, creado_por)
-      VALUES (?,?,?,?, 'BORRADOR', ?, ?)");
+  (codigo, cliente_id, fecha_salida, fecha_evento, fecha_retorno, estado, nota, creado_por)
+  VALUES (?,?,?,?,?, 'BORRADOR', ?, ?)");
     $ins->execute([
       $codigo,
       $cliente_id,
       $fecha_salida,
+       $fecha_evento,
       $fecha_retorno,
       ($nota !== '' ? $nota : null),
       (int)current_user()['id']
@@ -89,6 +97,7 @@ $sql = "SELECT
           r.id,
           r.codigo,
           r.fecha_salida,
+          r.fecha_evento,
           r.fecha_retorno,
           r.estado,
           r.creado_en,
@@ -153,7 +162,7 @@ require __DIR__ . '/../app/views/layout/sidebar.php';
       <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
 
       <div class="row g-3">
-        <div class="col-12 col-lg-5">
+        <div class="col-12 col-lg-3">
           <label class="form-label">Cliente</label>
           <select name="cliente_id" class="form-select" required>
             <option value="">-- Seleccionar cliente activo --</option>
@@ -166,19 +175,14 @@ require __DIR__ . '/../app/views/layout/sidebar.php';
         </div>
 
         <div class="col-6 col-lg-2">
-          <label class="form-label">Fecha salida</label>
-          <input type="date" name="fecha_salida" class="form-control" min="<?= $hoy ?>" required>
-        </div>
+  <label class="form-label">Fecha salida</label>
+  <input type="date" name="fecha_salida" class="form-control" min="<?= $hoy ?>" required>
+</div>
 
-        <div class="col-6 col-lg-2">
-          <label class="form-label">Fecha retorno</label>
-          <input type="date" name="fecha_retorno" class="form-control" min="<?= $hoy ?>" required>
-        </div>
-
-        <div class="col-12 col-lg-3">
-          <label class="form-label">Nota</label>
-          <input name="nota" class="form-control" placeholder="Ej: Evento en salón municipal">
-        </div>
+<div class="col-6 col-lg-2">
+  <label class="form-label">Fecha retorno</label>
+  <input type="date" name="fecha_retorno" class="form-control" min="<?= $hoy ?>" required>
+</div>
 
         <div class="col-12">
           <button class="btn btn-primary btn-pill">Crear y agregar artículos</button>
@@ -211,7 +215,7 @@ require __DIR__ . '/../app/views/layout/sidebar.php';
           <tr>
             <th>Código</th>
             <th>Cliente</th>
-            <th>Fechas (Salida/Retorno)</th>
+            <th>Fechas (Salida/Evento/Retorno)</th>
             <th>Alertas Operativas</th>
             <th>Estado</th>
             <th class="text-end">Acción</th>
@@ -235,9 +239,20 @@ require __DIR__ . '/../app/views/layout/sidebar.php';
                 <div class="text-muted small"><?= htmlspecialchars((string)$r['telefono']) ?></div>
               </td>
               <td>
-                <span class="badge text-bg-light border text-dark"><?= $r['fecha_salida'] ?></span>
-                <span class="badge text-bg-light border text-dark"><?= $r['fecha_retorno'] ?></span>
-              </td>
+  <div class="d-flex flex-column gap-1">
+    <span class="badge text-bg-light border text-dark">
+      Salida: <?= htmlspecialchars((string)$r['fecha_salida']) ?>
+    </span>
+
+    <span class="badge text-bg-light border text-dark">
+      Evento: <?= htmlspecialchars((string)$r['fecha_evento']) ?>
+    </span>
+
+    <span class="badge text-bg-light border text-dark">
+      Retorno: <?= htmlspecialchars((string)$r['fecha_retorno']) ?>
+    </span>
+  </div>
+</td>
               <td>
                 <?php if ($isVencidaE): ?><span class="badge text-bg-danger">ENTREGA ATRASADA</span><?php endif; ?>
                 <?php if ($isVencidaD): ?><span class="badge text-bg-danger">RETORNO ATRASADO</span><?php endif; ?>
