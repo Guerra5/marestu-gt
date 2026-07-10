@@ -179,10 +179,6 @@ require __DIR__ . '/../app/views/layout/sidebar.php';
   <input type="date" name="fecha_salida" class="form-control" min="<?= $hoy ?>" required>
 </div>
 
-<div class="col-6 col-lg-2">
-  <label class="form-label">Fecha de Evento</label>
-  <input type="date" name="fecha_evento" class="form-control" min="<?= $hoy ?>" required>
-</div>
 
 <div class="col-6 col-lg-2">
   <label class="form-label">Fecha retorno</label>
