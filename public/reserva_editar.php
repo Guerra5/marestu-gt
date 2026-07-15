@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-
+// PRUEBA
 require_once __DIR__ . '/../app/helpers/auth.php';
 require_once __DIR__ . '/../app/helpers/flash.php';
 require_once __DIR__ . '/../app/helpers/csrf.php';
