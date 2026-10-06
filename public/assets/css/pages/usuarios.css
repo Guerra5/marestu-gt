@@ -1,0 +1,9 @@
+.page-topbar { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .page-subtitle { color:#6c757d; margin-top:2px; }
+  .card-soft { border-radius:14px; }
+  .btn-pill { border-radius:10px; }
+  .badge-role { font-weight:600; }
+  .table thead th { white-space:nowrap; }
+
+[data-style="usuarios-1"] { font-size: 1.05rem; }
+[data-style="usuarios-2"] { width:60px; }

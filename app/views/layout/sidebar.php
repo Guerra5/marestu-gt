@@ -4,59 +4,8 @@ declare(strict_types=1);
 $u = current_user();
 $current = basename($_SERVER['PHP_SELF']);
 
-function is_active(string $file, string $current): string {
-  return $file === $current ? 'active' : '';
-}
+$is_active = static fn (string $file, string $current): string => $file === $current ? 'active' : '';
 
-/* =========================================================
-   ALERTAS 1 DÍA ANTES (y vencidas):
-   - Entrega alerta: CONFIRMADA + fecha_salida <= hoy+1 + falta entregar
-   - Devolución alerta: ENTREGADA + fecha_retorno <= hoy+1 + falta devolver/cerrar
-========================================================= */
-$alertas = 0;
-
-try {
-  $pdo = db();
-
-  // ✅ Entregas: hoy o mañana (incluye vencidas)
-  $st1 = $pdo->query("
-    SELECT COUNT(*) AS n
-    FROM (
-      SELECT r.id
-      FROM reservas r
-      LEFT JOIN reserva_detalle d ON d.reserva_id = r.id
-      WHERE r.estado = 'CONFIRMADA'
-        AND DATE(r.fecha_salida) <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)
-      GROUP BY r.id
-      HAVING SUM(GREATEST(d.cantidad - d.entregado, 0)) > 0
-    ) x
-  ");
-  $alert_entrega = (int)($st1->fetch()['n'] ?? 0);
-
-  // ✅ Devoluciones: hoy o mañana (incluye vencidas)
-  $st2 = $pdo->query("
-    SELECT COUNT(*) AS n
-    FROM (
-      SELECT r.id
-      FROM reservas r
-      LEFT JOIN reserva_detalle d ON d.reserva_id = r.id
-      WHERE r.estado = 'ENTREGADA'
-        AND DATE(r.fecha_retorno) <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)
-      GROUP BY r.id
-      HAVING SUM(GREATEST(d.entregado - (d.devuelto + d.danado + d.perdido), 0)) > 0
-    ) y
-  ");
-  $alert_devol = (int)($st2->fetch()['n'] ?? 0);
-
-  $alertas = $alert_entrega + $alert_devol;
-} catch (Throwable $e) {
-  // Si falla algo, NO rompemos el sidebar
-  $alertas = 0;
-}
-
-/* =========================================================
-   ✅ MENÚ REUTILIZABLE (para sidebar desktop y offcanvas móvil)
-========================================================= */
 ob_start();
 ?>
   <div class="d-flex align-items-center justify-content-between mb-3">
@@ -66,53 +15,53 @@ ob_start();
     </span>
   </div>
 
-  <div class="small mb-3" style="color: rgba(229,231,235,.85);">
+  <div class="small mb-3" data-style="layout-1">
     <div class="fw-semibold text-white"><?= htmlspecialchars($u['nombre'] ?? '') ?></div>
-    <div style="color: rgba(229,231,235,.70);">@<?= htmlspecialchars($u['usuario'] ?? '') ?></div>
+    <div data-style="layout-2">@<?= htmlspecialchars($u['usuario'] ?? '') ?></div>
   </div>
 
   <div class="list-group list-group-flush">
-    <a href="index.php" class="list-group-item list-group-item-action <?= is_active('index.php',$current) ?>">
+    <a href="index.php" class="list-group-item list-group-item-action <?= $is_active('index.php',$current) ?>">
       <i class="bi bi-speedometer2 me-2"></i> Inicio
     </a>
 
     <?php if (is_admin()): ?>
-      <a href="usuarios.php" class="list-group-item list-group-item-action <?= is_active('usuarios.php',$current) ?>">
+      <a href="usuarios.php" class="list-group-item list-group-item-action <?= $is_active('usuarios.php',$current) ?>">
         <i class="bi bi-people me-2"></i> Usuarios
       </a>
     <?php endif; ?>
 
-    <a href="categorias.php" class="list-group-item list-group-item-action <?= is_active('categorias.php',$current) ?>">
+    <a href="categorias.php" class="list-group-item list-group-item-action <?= $is_active('categorias.php',$current) ?>">
       <i class="bi bi-tags me-2"></i> Categorías
     </a>
 
-    <a href="articulos.php" class="list-group-item list-group-item-action <?= is_active('articulos.php',$current) ?>">
+    <a href="articulos.php" class="list-group-item list-group-item-action <?= $is_active('articulos.php',$current) ?>">
       <i class="bi bi-box-seam me-2"></i> Artículos
     </a>
 
-    <a href="kardex.php" class="list-group-item list-group-item-action <?= is_active('kardex.php',$current) ?>">
+    <a href="kardex.php" class="list-group-item list-group-item-action <?= $is_active('kardex.php',$current) ?>">
       <i class="bi bi-journal-text me-2"></i> Kardex
     </a>
 
-    <a href="clientes.php" class="list-group-item list-group-item-action <?= is_active('clientes.php',$current) ?>">
+    <a href="clientes.php" class="list-group-item list-group-item-action <?= $is_active('clientes.php',$current) ?>">
       <i class="bi bi-person-badge me-2"></i> Clientes
     </a>
 
     <!-- ✅ Reservas con badge de alertas (hoy/mañana) -->
     <a href="reservas.php"
-       class="list-group-item list-group-item-action d-flex align-items-center justify-content-between <?= is_active('reservas.php',$current) ?>">
+       class="list-group-item list-group-item-action d-flex align-items-center justify-content-between <?= $is_active('reservas.php',$current) ?>">
       <span><i class="bi bi-calendar-check me-2"></i> Reservas</span>
       <?php if ($alertas > 0): ?>
         <span class="badge rounded-pill text-bg-danger"><?= $alertas ?></span>
       <?php endif; ?>
     </a>
 
-    <a href="calendario.php" class="list-group-item list-group-item-action <?= is_active('calendario.php',$current) ?>">
+    <a href="calendario.php" class="list-group-item list-group-item-action <?= $is_active('calendario.php',$current) ?>">
       <i class="bi bi-calendar3 me-2"></i> Calendario
     </a>
   </div>
 
-  <div class="mt-4 pt-3 border-top" style="border-color: rgba(255,255,255,.08) !important;">
+  <div class="mt-4 pt-3 border-top" data-style="layout-3">
     <a href="logout.php" class="btn btn-outline-light w-100 btn-pill">
       <i class="bi bi-box-arrow-right me-2"></i> Salir
     </a>

@@ -1,0 +1,11 @@
+.card-soft{border-radius:14px;}
+  .btn-pill{border-radius:10px;}
+  .legend-badge{display:inline-flex;align-items:center;gap:8px;margin-right:10px;margin-bottom:6px;}
+  .legend-dot{width:10px;height:10px;border-radius:50%;}
+
+[data-style="calendario-1"] { background:#0d6efd; }
+[data-style="calendario-2"] { background:#212529; }
+[data-style="calendario-3"] { background:#198754; }
+[data-style="calendario-4"] { background:#6c757d; }
+[data-style="calendario-5"] { background:#dc3545; }
+[data-style="calendario-6"] { min-width: 260px; }

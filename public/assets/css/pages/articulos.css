@@ -1,0 +1,9 @@
+.page-topbar { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .page-subtitle { color:#6c757d; margin-top:2px; }
+  .card-soft { border-radius:14px; }
+  .btn-pill { border-radius:10px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+[data-style="articulos-1"] { min-width: 190px; }
+[data-style="articulos-2"] { min-width: 140px; }
+[data-style="articulos-3"] { width:60px; }

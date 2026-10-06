@@ -1,0 +1,33 @@
+.card-soft {
+    border-radius: 14px;
+  }
+
+  .btn-pill {
+    border-radius: 10px;
+  }
+
+  .mono {
+    font-family:
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Monaco,
+      Consolas,
+      "Liberation Mono",
+      "Courier New",
+      monospace;
+  }
+
+  /*
+   * Refuerzo de capas para Bootstrap.
+   * El JavaScript también moverá el modal a <body>.
+   */
+  #modalEntregaAdicional {
+    z-index: 1060;
+  }
+
+  .modal-backdrop {
+    z-index: 1050;
+  }
+
+[data-style="reserva_operacion-1"] { border-radius:14px; }

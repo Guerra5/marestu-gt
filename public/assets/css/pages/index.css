@@ -1,0 +1,15 @@
+.page-topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .page-subtitle{color:#6c757d;margin-top:2px;}
+  .card-soft{border-radius:14px;}
+  .btn-pill{border-radius:10px;}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}
+
+  /* ✅ Responsive topbar (solo dashboard) */
+  @media (max-width: 576px){
+    .page-topbar{flex-direction:column; align-items:stretch;}
+    .dash-actions{display:flex; flex-direction:column; gap:10px;}
+    .dash-actions .btn{width:100%;}
+  }
+  @media (max-width: 992px){
+    .dash-actions{flex-wrap:wrap;}
+  }

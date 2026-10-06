@@ -4,3 +4,8 @@
 /phpmyadmin/
 *.log
 .DS_Store
+/app/config/db.local.php
+/backups/
+/docs/legacy/
+*.sql
+!/migrations/*.sql

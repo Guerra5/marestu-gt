@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/permissions.php';
 
 function app_config(): array {
   static $cfg = null;
@@ -37,27 +38,6 @@ function require_login(): void {
 function is_admin(): bool {
   $u = current_user();
   return $u && ($u['rol'] ?? '') === 'ADMIN';
-}
-
-function login_attempt(string $usuario, string $password): bool {
-  $pdo = db();
-  $stmt = $pdo->prepare("SELECT id, nombre, usuario, password_hash, rol, activo FROM usuarios WHERE usuario = ? LIMIT 1");
-  $stmt->execute([$usuario]);
-  $row = $stmt->fetch();
-
-  if (!$row) return false;
-  if ((int)$row['activo'] !== 1) return false;
-
-  if (!password_verify($password, (string)$row['password_hash'])) return false;
-
-  // Guardamos lo mínimo en sesión
-  $_SESSION['user'] = [
-    'id' => (int)$row['id'],
-    'nombre' => (string)$row['nombre'],
-    'usuario' => (string)$row['usuario'],
-    'rol' => (string)$row['rol'],
-  ];
-  return true;
 }
 
 function logout(): void {

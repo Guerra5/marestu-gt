@@ -1,0 +1,158 @@
+body{font-family:Arial, Helvetica, sans-serif; color:#111; margin:24px;}
+
+  .no-print{margin-bottom:10px;}
+
+  @media print {.no-print{display:none;} body{margin:0;}}
+
+
+  /* ===== HEADER NUEVO ===== */
+
+  .hdr{
+
+    display:grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items:start;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+  }
+
+  .brand{display:flex; flex-direction:column; gap:6px;}
+
+  .logo{width:220px; height:auto; display:block;}
+
+  .brand a{color:#0b53d0; text-decoration:underline; font-size:14px;}
+
+  .brand .tel{color:#0a7c1f; font-weight:700; font-size:16px;}
+
+
+  .dates{justify-self:end; font-size:13px; line-height:1.4;}
+
+  .dates b{display:inline-block; width:140px;}
+
+
+  .title{
+
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:900;
+
+    color:#d60000;
+
+    margin: 14px 0 12px;
+
+  }
+
+
+  /* ===== CUERPO (como lo tenías) ===== */
+
+  .muted{color:#555; font-size:12px;}
+
+  table{width:100%; border-collapse:collapse; margin-top:12px;}
+
+  th,td{border:1px solid #ddd; padding:10px; font-size:13px; vertical-align:top;}
+
+  th{background:#f4f4f4; font-weight:700;}
+
+  .center{text-align:center;}
+
+  .right{text-align:right;}
+
+
+  /* Total final a la derecha, sin caja */
+
+  .total-row{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap: 40px;
+
+    font-size: 14px;
+
+    margin-top: 12px;
+
+    font-weight: 800;
+
+  }
+
+  .total-row .label{min-width: 90px; text-align:right;}
+
+  .total-row .value{min-width: 150px; text-align:right;}
+
+
+  /* Notas en cajita */
+
+  .notes{
+
+    margin-top: 18px;
+
+    border:1px solid #ddd;
+
+    border-radius: 14px;
+
+    padding: 14px 16px;
+
+  }
+
+  .notes h4{
+
+    margin:0 0 8px 0;
+
+    font-size: 16px;
+
+  }
+
+  .notes ul{
+
+    margin:0;
+
+    padding-left: 18px;
+
+    color:#333;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+  }
+
+
+  /* Firma como lo tenías */
+
+  .sign{
+
+    margin-top: 18px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+  }
+
+  .sign .line{
+
+    margin-top: 18px;
+
+    width: 280px;
+
+    border-bottom: 1px solid #555;
+
+    height: 1px;
+
+  }
+
+[data-style="reserva_cotizacion-1"] { margin-left:10px; }
+[data-style="reserva_cotizacion-2"] { font-size:14px; color:#111; }
+[data-style="reserva_cotizacion-3"] { width:90px; }
+[data-style="reserva_cotizacion-4"] { width:170px; }
+[data-style="reserva_cotizacion-5"] { margin-top:80px; width:300px; }
+[data-style="reserva_cotizacion-6"] { border-top:1px solid #000; }
+[data-style="reserva_cotizacion-7"] { text-align:center; font-size:13px; margin-top:4px; }
