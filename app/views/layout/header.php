@@ -14,32 +14,7 @@ $cfg = require __DIR__ . '/../../config/app.php';
   <link rel="stylesheet" href="assets/app.css">
 
   <!-- ✅ FIX RESPONSIVE (solo layout, no afecta módulos) -->
-  <style>
-    /* Evita overflow raro en móviles con sidebar + tables */
-    html, body { height: 100%; }
-    .app-wrap { min-height: 100vh; }
-
-    /* En móviles, el contenido no debe ser empujado por el sidebar */
-    @media (max-width: 992px) {
-      .sidebar-fixed { display: none !important; } /* el sidebar desktop se oculta */
-      .main-col { width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; }
-      .page-pad { padding: 12px !important; }
-    }
-
-    /* En desktop, sidebar visible */
-    @media (min-width: 993px) {
-      .mobile-topbar { display: none !important; }
-    }
-
-    /* Topbar sticky en móvil */
-    .mobile-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 1030;
-      background: #0b1220;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/layout.css">
 </head>
 
 <body class="bg-light app-wrap">

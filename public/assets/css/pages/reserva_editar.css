@@ -1,0 +1,69 @@
+.card-soft {
+
+    border-radius: 14px;
+
+  }
+
+
+  .btn-pill {
+
+    border-radius: 10px;
+
+  }
+
+
+  .mono {
+
+    font-family:
+
+      ui-monospace,
+
+      SFMono-Regular,
+
+      Menlo,
+
+      Monaco,
+
+      Consolas,
+
+      "Liberation Mono",
+
+      "Courier New",
+
+      monospace;
+
+  }
+
+
+  .article-results {
+
+    min-height: 20px;
+
+  }
+
+
+  @media (max-width: 991.98px) {
+
+    .reservation-heading {
+
+      flex-direction: column;
+
+      gap: 12px;
+
+    }
+
+
+    .reservation-heading-actions {
+
+      width: 100%;
+
+    }
+
+
+    .reservation-heading-actions .btn {
+
+      width: 100%;
+
+    }
+
+  }

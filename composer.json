@@ -1,0 +1,14 @@
+{
+    "name": "marestu/alquifiestas",
+    "description": "Dependencias de la generación de PDF existente de MARESTU",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "dompdf/dompdf": "^3.1"
+    },
+    "config": {
+        "platform": { "php": "8.1.25" },
+        "allow-plugins": false,
+        "sort-packages": true
+    }
+}

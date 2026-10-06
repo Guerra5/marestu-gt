@@ -1,0 +1,128 @@
+body{font-family:Arial, Helvetica, sans-serif; color:#111; margin:24px;}
+
+  .no-print{margin-bottom:10px;}
+
+  @media print {.no-print{display:none;} body{margin:0;}}
+
+
+  /* ===== HEADER NUEVO (EL QUE TE GUSTÓ) ===== */
+
+  .hdr{
+
+    display:grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items:start;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+  }
+
+  .brand{display:flex; flex-direction:column; gap:6px;}
+
+  .logo{width:220px; height:auto; display:block;}
+
+  .brand a{color:#0b53d0; text-decoration:underline; font-size:14px;}
+
+  .brand .tel{color:#0a7c1f; font-weight:700; font-size:16px;}
+
+
+  .dates{justify-self:end; font-size:13px; line-height:1.4;}
+
+  .dates b{display:inline-block; width:140px;}
+
+
+  .title{
+
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:900;
+
+    color:#d60000;
+
+    margin: 14px 0 12px;
+
+  }
+
+
+  /* ===== CUERPO COMO ANTES (TABLA + FIRMA SIMPLE) ===== */
+
+  .muted{color:#555; font-size:12px;}
+
+
+  table{width:100%; border-collapse:collapse; margin-top:12px;}
+
+  th,td{border:1px solid #ddd; padding:8px; font-size:13px; vertical-align:top;}
+
+  th{background:#f4f4f4;}
+
+  .center{text-align:center;}
+
+  .mt{margin-top:14px;}
+
+
+  /* ===== NOTA / INDICACIONES DEL CLIENTE ===== */
+
+  .nota-reserva{
+
+    margin-top: 22px;
+
+    margin-bottom: 26px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d6d6d6;
+
+    background: #fafafa;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+  }
+
+
+  .nota-reserva .titulo-nota{
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+
+  }
+
+
+  .nota-reserva .contenido-nota{
+
+    white-space: pre-wrap;
+
+  }
+
+
+  .sign{
+
+    margin-top: 18px;
+
+    font-size: 14px;
+
+  }
+
+  .sign .line{
+
+    margin-top: 75px;
+
+    width: 280px;
+
+    border-bottom: 1px solid #555;
+
+    height: 1px;
+
+  }
+
+[data-style="reserva_nota_entrega-1"] { margin-left:10px; }
+[data-style="reserva_nota_entrega-2"] { font-size:14px; color:#111; }
+[data-style="reserva_nota_entrega-3"] { width:140px; }
